@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Search from "./components/Search";
-import { fetchUserData } from "./services/githubService";
+import { fetchUserData } from "./services/githubService.js";
 
 function App() {
   const [user, setUser] = useState(null);
