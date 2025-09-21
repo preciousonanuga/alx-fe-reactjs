@@ -1,13 +1,16 @@
 import { useState } from "react";
-import Search from "./components/Search";
-import { fetchUserData } from "./services/githubService";
+import { fetchUserData } from "../services/githubService";
 
-function App() {
+const Search = () => {
+  const [username, setUsername] = useState("");
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSearch = async (username) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (username.trim() === "") return;
+
     setLoading(true);
     setError("");
     setUser(null);
@@ -20,12 +23,24 @@ function App() {
     } finally {
       setLoading(false);
     }
+
+    setUsername("");
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>GitHub User Search Application</h1>
-      <Search onSearch={handleSearch} />
+    <div>
+      <form onSubmit={handleSubmit} style={{ marginBottom: "20px" }}>
+        <input
+          type="text"
+          placeholder="Enter GitHub username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          style={{ padding: "10px", width: "250px" }}
+        />
+        <button type="submit" style={{ padding: "10px 15px", marginLeft: "8px" }}>
+          Search
+        </button>
+      </form>
 
       {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}
@@ -38,13 +53,17 @@ function App() {
             style={{ borderRadius: "50%" }}
           />
           <h2>{user.name || user.login}</h2>
-          <a href={user.html_url} target="_blank" rel="noopener noreferrer">
+          <a
+            href={user.html_url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             View Profile
           </a>
         </div>
       )}
     </div>
   );
-}
+};
 
-export default App;
+export default Search;
