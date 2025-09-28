@@ -1,10 +1,11 @@
-function Footer(){
+import React from "react";
+
+export default function Footer(){
   return(
-     <div> 
-    <footer>
+    <> 
+      <footer>
         <p>© 2023 City Lovers</p>
-  </footer>
-  </div>
+      </footer>
+    </>
   );
 }
-export default Footer
